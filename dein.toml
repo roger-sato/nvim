@@ -1,0 +1,227 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]]
+repo = 'wsdjeg/dein-ui.vim'
+
+[[plugins]]
+repo = 'vim-jp/vimdoc-ja'
+
+[[plugins]]
+hook_add = '''
+let g:gruvbox_contrast_dark = 'hard'
+'''
+repo = 'morhetz/gruvbox'
+
+[[plugins]]
+repo = 'cespare/vim-toml'
+
+[[plugins]]
+repo = 'ayu-theme/ayu-vim'
+
+[[plugins]]
+hook_add = '''
+let g:highlightedyank_highlight_duration = 150
+'''
+repo = 'machakann/vim-highlightedyank'
+
+[[plugins]]
+repo = 'tpope/vim-commentary'
+
+[[plugins]]
+hook_add = '''
+	map <Leader>f <Plug>(easymotion-bd-f)
+	nmap <Leader>f <Plug>(easymotion-overwin-f)
+	map <Leader>t <Plug>(easymotion-bd-t)
+	nmap <Leader>t <Plug>(easymotion-overwin-t)
+	map <Leader>s <Plug>(easymotion-bd-f2)
+	nmap <Leader>s <Plug>(easymotion-overwin-f2)
+	map <Leader>/ <Plug>(easymotion-sn)
+	omap <Leader>/ <Plug>(easymotion-tn)
+	map <Leader>h <Plug>(easymotion-linebackward)
+	map <Leader>l <Plug>(easymotion-lineforward)
+	map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+	let g:EasyMotion_smartcase = 1
+	'''
+repo = 'easymotion/vim-easymotion'
+
+[[plugins]]
+repo = 'vim-airline/vim-airline'
+
+[[plugins]]
+repo = 'machakann/vim-sandwich'
+
+[[plugins]]
+hook_add = '''
+	nmap s <Plug>Sneak_s
+	nmap S <Plug>Sneak_S
+	'''
+repo = 'justinmk/vim-sneak'
+
+[[plugins]]
+hook_add = '''
+	let g:winresizer_start_key = '<C-w><C-w>'
+	'''
+repo = 'simeji/winresizer'
+
+[[plugins]]
+repo = 'vim-scripts/ReplaceWithRegister'
+
+# [[plugins]]
+# repo = 'zefei/vim-wintabs'
+# hook_add = ''' map <C-n> <Plug>(wintabs_previous)
+#   map <C-p> <Plug>(wintabs_next)
+#   map <C-q> <Plug>(wintabs_close)
+#   map <C-T>u <Plug>(wintabs_undo)
+#   map <C-T><C-o> <Plug>(wintabs_only)
+# '''
+
+[[plugins]]
+repo = 'zefei/vim-wintabs-powerline'
+
+[[plugins]]
+repo = 'wellle/targets.vim'
+
+[[plugins]]
+hook_add = '''
+	nmap <leader>gs <cmd>Gina status<cr>
+	'''
+repo = 'lambdalisue/gina.vim'
+
+[[plugins]]
+hook_add = '''
+	let g:gitgutter_map_keys = 0
+	nmap ]c <Plug>(GitGutterNextHunk)
+nmap [c <Plug>(GitGutterPrevHunk)
+	'''
+repo = 'airblade/vim-gitgutter'
+
+[[plugins]]
+hook_add = '''
+	nmap <Leader>e <cmd>Fern . -reveal=% -drawer<cr>
+	'''
+repo = 'lambdalisue/fern.vim'
+
+[[plugins]]
+repo = 'lambdalisue/nerdfont.vim'
+
+[[plugins]]
+repo = 'lambdalisue/fern-git-status.vim'
+
+[[plugins]]
+repo = 'ap/vim-buftabline'
+
+[[plugins]]
+repo = 'ulwlu/elly.vim'
+[[plugins]]
+hook_add = '''
+ lua << EOF
+ local nvim_lsp = require('lspconfig')
+ local on_attach = function (client, bufnr)
+ local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+ local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+local opts = { noremap=true, silent=true }
+ buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+ buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+ buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+ buf_set_keymap('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+ buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+ buf_set_keymap('n', 'gx', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+ buf_set_keymap('n', 'g[', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+ buf_set_keymap('n', 'g]', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+end
+
+ local lsp_installer = require("nvim-lsp-installer")
+ lsp_installer.on_server_ready(function(server)
+   local opts = {}
+   opts.on_attach = on_attach
+   server:setup(opts)
+   vim.cmd [[ do User LspAttachBuffers ]]
+ end)
+EOF
+'''
+repo = 'neovim/nvim-lspconfig'
+
+[[plugins]]
+repo = 'williamboman/nvim-lsp-installer'
+
+[[plugins]]
+hook_add = '''
+inoremap <silent><expr> <TAB>
+\ pumvisible() ? '<C-n>' :
+\ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
+\ '<TAB>' : ddc#manual_complete()
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+call ddc#custom#patch_global('sources', ['nvim-lsp', 'around', 'vsnip', 'file'])
+call ddc#custom#patch_global('sourceOptions', {
+		\ '_': {
+		\   'matchers': ['matcher_head'],
+		\   'sorters': ['sorter_rank'],
+		\ },
+		\ 'around': {'mark': 'A'},
+		\ 'file': {
+		\   'mark': 'F',
+		\   'isVolatile': v:true,
+		\   'forceCompletionPattern': '\S/\S*',
+		\ },
+		\ 'nvim-lsp': {
+		\ 'mark': 'LSP',
+		\ 'forceCompletionPattern': '\.\w*|:\w*|->\w*',
+		\ },
+		\ })
+
+call ddc#custom#patch_global('sourceParams', {
+		\ 'around': {'maxSize': 500},
+		\ 'file': {'smartCase': v:true},
+		\ })
+
+call ddc#custom#patch_filetype(
+		\ ['ps1', 'dosbatch', 'autohotkey', 'registry'], {
+		\ 'sourceOptions': {
+		\   'file': {
+		\     'forceCompletionPattern': '\S\\\S*',
+		\   },
+		\ },
+		\ 'sourceParams': {
+		\   'file': {
+		\     'mode': 'win32',
+		\   },
+		\ }})
+
+call ddc#enable()
+	'''
+repo = 'Shougo/ddc.vim'
+
+[[plugins]]
+repo = 'vim-denops/denops.vim'
+
+[[plugins]]
+on_source = 'ddc.vim'
+repo = 'Shougo/ddc-around'
+
+[[plugins]]
+on_source = 'ddc.vim'
+repo = 'Shougo/ddc-matcher_head'
+
+[[plugins]]
+on_source = 'ddc.vim'
+repo = 'Shougo/ddc-sorter_rank'
+
+[[plugins]]
+on_source = 'ddc.vim'
+repo = 'LumaKernel/ddc-file'
+
+[[plugins]]
+on_source = 'ddc.vim'
+repo = 'Shougo/ddc-nvim-lsp'
+
+[[plugins]]
+on_source = 'ddc.vim'
+repo = 'hrsh7th/vim-vsnip-integ'
+
+[[plugins]]
+on_source = 'ddc.vim'
+repo = 'hrsh7th/vim-vsnip'
