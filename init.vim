@@ -1,4 +1,6 @@
 lua require('config')
 lua require('map')
 lua require('plugin')
-lua require('style')
+if !exists('g:vscode') 
+    lua require('style')
+endif

@@ -91,9 +91,14 @@ repo = 'lambdalisue/gina.vim'
 
 [[plugins]]
 hook_add = '''
-	let g:gitgutter_map_keys = 0
-	nmap ]c <Plug>(GitGutterNextHunk)
-nmap [c <Plug>(GitGutterPrevHunk)
+	nmap <leader>gl <Plug>(GitGutterNextHunk)
+	nmap <leader>gh <Plug>(GitGutterPrevHunk)
+	nmap <leader>gt <Plug>(GitGutterLineHighlightsToggle)
+	nmap <leader>gd <Plug>(GitGutterPreviewHunk)
+	highlight GitGutterAdd ctermfg=green
+	highlight GitGutterChange ctermfg=blue
+	highlight GitGutterDelete ctermfg=red
+	set updatetime=250
 	'''
 repo = 'airblade/vim-gitgutter'
 
@@ -107,16 +112,29 @@ repo = 'lambdalisue/fern.vim'
 repo = 'lambdalisue/nerdfont.vim'
 
 [[plugins]]
+hook_add = '''
+  let g:fern#renderer = 'nerdfont'
+'''
+repo = 'lambdalisue/fern-renderer-nerdfont.vim'
+
+[[plugins]]
 repo = 'lambdalisue/fern-git-status.vim'
 
 [[plugins]]
 repo = 'ap/vim-buftabline'
 
 [[plugins]]
-repo = 'ulwlu/elly.vim'
+repo = 'williamboman/nvim-lsp-installer'
 
 [[plugins]]
-repo = 'williamboman/nvim-lsp-installer'
+hook_add = '''
+  augroup my-glyph-palette
+    autocmd! *
+    autocmd FileType fern call glyph_palette#apply()
+    autocmd FileType nerdtree,startify call glyph_palette#apply()
+  augroup END
+'''
+repo = 'lambdalisue/glyph-palette.vim'
 
 [[plugins]]
 hook_add = '''
@@ -196,3 +214,7 @@ repo = 'hrsh7th/vim-vsnip-integ'
 [[plugins]]
 on_source = 'ddc.vim'
 repo = 'hrsh7th/vim-vsnip'
+
+[[plugins]]
+on_source = 'ddc.vim'
+repo = 'tomasiser/vim-code-dark'
