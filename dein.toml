@@ -208,13 +208,13 @@ repo = 'LumaKernel/ddc-file'
 on_source = 'ddc.vim'
 repo = 'Shougo/ddc-nvim-lsp'
 
-[[plugins]]
-on_source = 'ddc.vim'
-repo = 'hrsh7th/vim-vsnip-integ'
+# [[plugins]]
+# on_source = 'ddc.vim'
+# repo = 'hrsh7th/vim-vsnip-integ'
 
-[[plugins]]
-on_source = 'ddc.vim'
-repo = 'hrsh7th/vim-vsnip'
+# [[plugins]]
+# on_source = 'ddc.vim'
+# repo = 'hrsh7th/vim-vsnip'
 
 [[plugins]]
 on_source = 'ddc.vim'
@@ -226,7 +226,7 @@ repo = 'chr4/nginx.vim'
 [[plugins]]
 repo = 'junegunn/fzf'
 build = './install --bin'
-merged = '0'
+merged = 0
 
 [[plugins]]
 repo = 'junegunn/fzf.vim'
@@ -248,24 +248,40 @@ command! -nargs=* -bang RG call FZGrep(<q-args>, <bang>0)
 '''
 
 [[plugins]]
-repo = 'fatih/vim-go'
-hook_add = '''
-let g:go_highlight_array_whitespace_error = 1
-let g:go_highlight_chan_whitespace_error = 1
-let g:go_highlight_extra_types = 1
-let g:go_highlight_space_tab_error = 1
-let g:go_highlight_trailing_whitespace_error = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_function_arguments = 1
-let g:go_highlight_function_calls = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_types = 1
-let g:go_highlight_build_constraints = 1
-let g:go_highlight_generate_tags = 1
-let g:go_highlight_variable_assignments = 1
-let g:go_highlight_variable_declarations = 1
-'''
+repo = 'prabirshrestha/asyncomplete.vim'
 
 [[plugins]]
-repo = 'cespare/vim-toml'
+repo = 'prabirshrestha/asyncomplete-lsp.vim'
+
+[[plugins]]
+repo = 'prabirshrestha/vim-lsp'
+
+[[plugins]]
+repo = 'mattn/vim-lsp-settings'
+
+[[plugins]]
+repo = 'SirVer/ultisnips'
+
+[[plugins]]
+repo = 'honza/vim-snippets'
+
+[[plugins]]
+repo = 'thomasfaingnaert/vim-lsp-snippets'
+
+[[plugins]]
+repo = 'thomasfaingnaert/vim-lsp-ultisnips'
+
+[[plugins]]
+repo = 'hrsh7th/vim-vsnip'
+
+[[plugins]]
+repo = 'hrsh7th/vim-vsnip-integ'
+
+[[plugins]]
+repo = 'mattn/vim-goimports'
+
+[[plugins]]
+repo = 'neovim/nvim-laspconfig'
+
+[[plugins]]
+repo = 'rust-lang/rust.vim'

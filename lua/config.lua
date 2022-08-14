@@ -9,4 +9,4 @@ vim.g.cursorline_timeout=10
 vim.cmd[[set sh=zsh]]
 vim.cmd[[autocmd TermOpen * startinsert]]
 vim.cmd[[command! -nargs=* T split | wincmd j | resize 20 | terminal <args>]]
-
+vim.g.rustfmt_autosave=1
