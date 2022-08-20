@@ -124,8 +124,11 @@ repo = 'lambdalisue/fern-git-status.vim'
 [[plugins]]
 repo = 'ap/vim-buftabline'
 
+# [[plugins]]
+# repo = 'williamboman/nvim-lsp-installer'
+
 [[plugins]]
-repo = 'williamboman/nvim-lsp-installer'
+repo = 'vim-denops/denops.vim'
 
 [[plugins]]
 hook_add = '''
@@ -137,76 +140,10 @@ hook_add = '''
 '''
 repo = 'lambdalisue/glyph-palette.vim'
 
-[[plugins]]
-hook_add = '''
-inoremap <silent><expr> <TAB>
-\ pumvisible() ? '<C-n>' :
-\ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
-\ '<TAB>' : ddc#manual_complete()
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-call ddc#custom#patch_global('sources', ['nvim-lsp', 'around', 'vsnip', 'file'])
-call ddc#custom#patch_global('sourceOptions', {
-		\ '_': {
-		\   'matchers': ['matcher_head'],
-		\   'sorters': ['sorter_rank'],
-		\ },
-		\ 'around': {'mark': 'A'},
-		\ 'file': {
-		\   'mark': 'F',
-		\   'isVolatile': v:true,
-		\   'forceCompletionPattern': '\S/\S*',
-		\ },
-		\ 'nvim-lsp': {
-		\ 'mark': 'LSP',
-		\ 'forceCompletionPattern': '\.\w*|:\w*|->\w*',
-		\ },
-		\ })
-
-call ddc#custom#patch_global('sourceParams', {
-		\ 'around': {'maxSize': 500},
-		\ 'file': {'smartCase': v:true},
-		\ })
-
-call ddc#custom#patch_filetype(
-		\ ['ps1', 'dosbatch', 'autohotkey', 'registry'], {
-		\ 'sourceOptions': {
-		\   'file': {
-		\     'forceCompletionPattern': '\S\\\S*',
-		\   },
-		\ },
-		\ 'sourceParams': {
-		\   'file': {
-		\     'mode': 'win32',
-		\   },
-		\ }})
-
-call ddc#enable()
-	'''
-repo = 'Shougo/ddc.vim'
-
-[[plugins]]
-repo = 'vim-denops/denops.vim'
-
-[[plugins]]
-on_source = 'ddc.vim'
-repo = 'Shougo/ddc-around'
-
-[[plugins]]
-on_source = 'ddc.vim'
-repo = 'Shougo/ddc-matcher_head'
-
-[[plugins]]
-on_source = 'ddc.vim'
-repo = 'Shougo/ddc-sorter_rank'
-
-[[plugins]]
-on_source = 'ddc.vim'
-repo = 'LumaKernel/ddc-file'
-
-[[plugins]]
-on_source = 'ddc.vim'
-repo = 'Shougo/ddc-nvim-lsp'
+# [[plugins]]
+# on_source = 'ddc.vim'
+# repo = 'LumaKernel/ddc-file'
 
 # [[plugins]]
 # on_source = 'ddc.vim'
@@ -217,7 +154,6 @@ repo = 'Shougo/ddc-nvim-lsp'
 # repo = 'hrsh7th/vim-vsnip'
 
 [[plugins]]
-on_source = 'ddc.vim'
 repo = 'tomasiser/vim-code-dark'
 
 [[plugins]]
@@ -247,17 +183,17 @@ command! -nargs=* -bang RG call FZGrep(<q-args>, <bang>0)
     \   fzf#vim#with_preview({'options': '--exact --reverse'}, 'right:50%:wrap'))
 '''
 
-[[plugins]]
-repo = 'prabirshrestha/asyncomplete.vim'
+# [[plugins]]
+# repo = 'prabirshrestha/asyncomplete.vim'
 
-[[plugins]]
-repo = 'prabirshrestha/asyncomplete-lsp.vim'
+# [[plugins]]
+# repo = 'prabirshrestha/asyncomplete-lsp.vim'
 
-[[plugins]]
-repo = 'prabirshrestha/vim-lsp'
+# [[plugins]]
+# repo = 'prabirshrestha/vim-lsp'
 
-[[plugins]]
-repo = 'mattn/vim-lsp-settings'
+# [[plugins]]
+# repo = 'mattn/vim-lsp-settings'
 
 [[plugins]]
 repo = 'SirVer/ultisnips'
@@ -265,11 +201,11 @@ repo = 'SirVer/ultisnips'
 [[plugins]]
 repo = 'honza/vim-snippets'
 
-[[plugins]]
-repo = 'thomasfaingnaert/vim-lsp-snippets'
+# [[plugins]]
+# repo = 'thomasfaingnaert/vim-lsp-snippets'
 
-[[plugins]]
-repo = 'thomasfaingnaert/vim-lsp-ultisnips'
+# [[plugins]]
+# repo = 'thomasfaingnaert/vim-lsp-ultisnips'
 
 [[plugins]]
 repo = 'hrsh7th/vim-vsnip'
@@ -277,11 +213,109 @@ repo = 'hrsh7th/vim-vsnip'
 [[plugins]]
 repo = 'hrsh7th/vim-vsnip-integ'
 
-[[plugins]]
-repo = 'mattn/vim-goimports'
+# [[plugins]]
+# repo = 'mattn/vim-goimports'
+
+# [[plugins]]
+# repo = 'rust-lang/rust.vim'
+
 
 [[plugins]]
-repo = 'neovim/nvim-laspconfig'
+repo = 'williamboman/nvim-lsp-installer'
 
 [[plugins]]
-repo = 'rust-lang/rust.vim'
+repo = 'Shougo/ddc-nvim-lsp'
+
+[[plugins]]
+repo = 'Shougo/ddc-around'
+
+[[plugins]]
+repo = 'Shougo/ddc-matcher_head'
+
+[[plugins]]
+repo = 'Shougo/ddc-sorter_rank'
+
+[[plugins]]
+repo = 'neovim/nvim-lspconfig'
+depends = ['nvim-lsp-installer']
+hook_add= '''
+lua << EOF
+local lsp_installer = require("nvim-lsp-installer")
+lsp_installer.on_server_ready(function(server)
+  local opts = {}
+  server:setup(opts)
+end)
+
+local opts = { noremap=true, silent=true }
+vim.keymap.set('n', '<space>h', vim.diagnostic.open_float, opts)
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+vim.keymap.set('n', '<space>r', vim.diagnostic.setloclist, opts)
+
+local on_attach = function(client, bufnr)
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  local bufopts = { noremap=true, silent=true, buffer=bufnr }
+  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+  vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+  vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+  vim.keymap.set('n', '<space>wl', function()
+    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  end, bufopts)
+  vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
+  vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
+  vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+  vim.keymap.set('n', 'gf', vim.lsp.buf.formatting, bufopts)
+end
+
+local lsp_flags = {
+  debounce_text_changes = 150,
+}
+require('lspconfig')['pyright'].setup{
+    on_attach = on_attach,
+    flags = lsp_flags,
+}
+require('lspconfig')['tsserver'].setup{
+    on_attach = on_attach,
+    flags = lsp_flags,
+}
+require('lspconfig')['rust_analyzer'].setup{
+    on_attach = on_attach,
+    flags = lsp_flags,
+    -- Server-specific settings...
+    settings = {
+      ["rust-analyzer"] = {}
+    }
+}
+EOF
+'''
+
+[[plugins]]
+hook_add = '''
+  call ddc#custom#patch_global('sources', ['nvim-lsp', 'around'])
+  call ddc#custom#patch_global('sourceOptions', {
+        \ '_': {
+        \   'matchers': ['matcher_head'],
+	\  },
+        \ 'around': {
+        \   'mark': 'around' },
+        \ 'nvim-lsp': {
+        \   'mark': 'lsp',
+        \   'forceCompletionPattern': '\.\w*|:\w*|->\w*' },
+        \ })
+
+  inoremap <silent><expr> <TAB>
+  \ ddc#map#pum_visible() ? '<C-n>' :
+  \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
+  \ '<TAB>' : ddc#map#manual_complete()
+
+  inoremap <expr><S-TAB>  ddc#map#pum_visible() ? '<C-p>' : '<C-h>'
+  call ddc#enable()
+	'''
+depends = ['denops.vim','nvim-lspconfig']
+repo = 'Shougo/ddc.vim'
