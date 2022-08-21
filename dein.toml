@@ -124,9 +124,6 @@ repo = 'lambdalisue/fern-git-status.vim'
 [[plugins]]
 repo = 'ap/vim-buftabline'
 
-# [[plugins]]
-# repo = 'williamboman/nvim-lsp-installer'
-
 [[plugins]]
 repo = 'vim-denops/denops.vim'
 
@@ -139,19 +136,6 @@ hook_add = '''
   augroup END
 '''
 repo = 'lambdalisue/glyph-palette.vim'
-
-
-# [[plugins]]
-# on_source = 'ddc.vim'
-# repo = 'LumaKernel/ddc-file'
-
-# [[plugins]]
-# on_source = 'ddc.vim'
-# repo = 'hrsh7th/vim-vsnip-integ'
-
-# [[plugins]]
-# on_source = 'ddc.vim'
-# repo = 'hrsh7th/vim-vsnip'
 
 [[plugins]]
 repo = 'tomasiser/vim-code-dark'
@@ -223,6 +207,12 @@ repo = 'hrsh7th/vim-vsnip-integ'
 [[plugins]]
 repo = 'williamboman/nvim-lsp-installer'
 
+# [[plugins]]
+# repo = 'williamboman/mason.nvim'
+
+# [[plugins]]
+# repo = 'williamboman/mason-lspconfig.nvim'
+
 [[plugins]]
 repo = 'Shougo/ddc-nvim-lsp'
 
@@ -247,10 +237,10 @@ lsp_installer.on_server_ready(function(server)
 end)
 
 local opts = { noremap=true, silent=true }
-vim.keymap.set('n', '<space>h', vim.diagnostic.open_float, opts)
+vim.keymap.set('n', '<leader>h', vim.diagnostic.open_float, opts)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-vim.keymap.set('n', '<space>r', vim.diagnostic.setloclist, opts)
+vim.keymap.set('n', '<leader>r', vim.diagnostic.setloclist, opts)
 
 local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -261,14 +251,14 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
   vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
   vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-  vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-  vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-  vim.keymap.set('n', '<space>wl', function()
+  vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+  vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+  vim.keymap.set('n', '<leader>ll', function()
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   end, bufopts)
-  vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
-  vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
-  vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+  vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, bufopts)
+  vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
+  vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
   vim.keymap.set('n', 'gf', vim.lsp.buf.formatting, bufopts)
 end

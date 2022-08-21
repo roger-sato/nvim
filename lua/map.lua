@@ -35,6 +35,7 @@ map('n', ')', '$', ns)
 map('n', '<leader>p', '<cmd>GFiles<cr>',ns)
 map('n', '<leader>P', '<cmd>Files<cr>',ns)
 map('n', '<leader>f', '<cmd>RG<cr>',ns)
+map('n', '<D-f>', '<cmd>RG<cr>',ns)
 
 map('v', 'j','gj',ns)
 map('v', 'k','gk',ns)
