@@ -1,5 +1,5 @@
 lua require('config')
 lua require('map')
 lua require('plugin')
+lua require('lsp')
 lua require('style')
-" lua require('rust_lsp')

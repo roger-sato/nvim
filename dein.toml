@@ -185,11 +185,17 @@ repo = 'SirVer/ultisnips'
 [[plugins]]
 repo = 'honza/vim-snippets'
 
+[[plugins]]
+repo = 'kamykn/spelunker.vim'
+
 # [[plugins]]
 # repo = 'thomasfaingnaert/vim-lsp-snippets'
 
 # [[plugins]]
 # repo = 'thomasfaingnaert/vim-lsp-ultisnips'
+
+[[plugins]]
+repo = 'Shougo/junkfile.vim'
 
 [[plugins]]
 repo = 'hrsh7th/vim-vsnip'
@@ -228,62 +234,6 @@ repo = 'Shougo/ddc-sorter_rank'
 [[plugins]]
 repo = 'neovim/nvim-lspconfig'
 depends = ['nvim-lsp-installer']
-hook_add= '''
-lua << EOF
-local lsp_installer = require("nvim-lsp-installer")
-lsp_installer.on_server_ready(function(server)
-  local opts = {}
-  server:setup(opts)
-end)
-
-local opts = { noremap=true, silent=true }
-vim.keymap.set('n', '<leader>h', vim.diagnostic.open_float, opts)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-vim.keymap.set('n', '<leader>r', vim.diagnostic.setloclist, opts)
-
-local on_attach = function(client, bufnr)
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-  local bufopts = { noremap=true, silent=true, buffer=bufnr }
-  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-  vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-  vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-  vim.keymap.set('n', '<leader>ll', function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, bufopts)
-  vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, bufopts)
-  vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
-  vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
-  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-  vim.keymap.set('n', 'gf', vim.lsp.buf.formatting, bufopts)
-end
-
-local lsp_flags = {
-  debounce_text_changes = 150,
-}
-require('lspconfig')['pyright'].setup{
-    on_attach = on_attach,
-    flags = lsp_flags,
-}
-require('lspconfig')['tsserver'].setup{
-    on_attach = on_attach,
-    flags = lsp_flags,
-}
-require('lspconfig')['rust_analyzer'].setup{
-    on_attach = on_attach,
-    flags = lsp_flags,
-    -- Server-specific settings...
-    settings = {
-      ["rust-analyzer"] = {}
-    }
-}
-EOF
-'''
 
 [[plugins]]
 hook_add = '''
@@ -304,8 +254,37 @@ hook_add = '''
   \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
   \ '<TAB>' : ddc#map#manual_complete()
 
+  set completeopt-=preview
   inoremap <expr><S-TAB>  ddc#map#pum_visible() ? '<C-p>' : '<C-h>'
   call ddc#enable()
 	'''
 depends = ['denops.vim','nvim-lspconfig']
 repo = 'Shougo/ddc.vim'
+
+[[plugins]]
+repo = 'matsui54/denops-signature_help'
+depends = ['denops.vim']
+hook_add = '''
+call signature_help#enable()
+let g:signature_help_config = {
+	      \ 'border': v:true,
+	      \ 'maxWidth': 80,
+	      \ 'maxHeight': 30,
+	      \ 'style': "full",
+	      \ 'onTriggerChar': v:false,
+	      \ 'multiLabel': v:false,
+	      \ 'fallbackToBelow': v:true,
+	      \ }
+'''
+
+[[plugins]]
+repo = 'matsui54/denops-popup-preview.vim'
+depends = ['denops.vim']
+hook_add = '''
+call popup_preview#enable()
+let g:popup_preview_config = {
+	      \ 'maxWidth': 60,
+	      \ 'maxHeight': 30,
+	      \ }
+'''
+
