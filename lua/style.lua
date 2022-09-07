@@ -2,5 +2,5 @@
 -- vim.cmd[[autocmd ColorScheme * hi LspDiagnosticsDefaultError guifg=#738C9C]]
 vim.cmd [[set termguicolors]]
 vim.cmd [[colorscheme codedark]]
--- vim.cmd[[autocmd ColorScheme * hi TabLineSel guibg=#55576c]]
 vim.cmd [[autocmd ColorScheme * hi TabLineSel guibg=#b8860b guifg=black]]
+vim.cmd [[colorscheme codedark]]

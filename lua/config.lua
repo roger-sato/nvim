@@ -10,4 +10,3 @@ vim.cmd [[set sh=zsh]]
 vim.cmd [[autocmd TermOpen * startinsert]]
 vim.cmd [[command! -nargs=* T split | wincmd j | resize 20 | terminal <args>]]
 vim.cmd [[set nospell]]
-vim.g.rustfmt_autosave = 1
