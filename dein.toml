@@ -68,14 +68,11 @@ let g:winresizer_start_key = '<leader>E'
 [[plugins]]
 repo = 'vim-scripts/ReplaceWithRegister'
 
-# [[plugins]]
-# repo = 'zefei/vim-wintabs'
-# hook_add = ''' map <C-n> <Plug>(wintabs_previous)
-#   map <C-p> <Plug>(wintabs_next)
-#   map <C-q> <Plug>(wintabs_close)
-#   map <C-T>u <Plug>(wintabs_undo)
-#   map <C-T><C-o> <Plug>(wintabs_only)
-# '''
+[[plugins]]
+repo = 'nvim-lua/plenary.nvim'
+
+[[plugins]]
+repo = 'jose-elias-alvarez/null-ls.nvim'
 
 [[plugins]]
 repo = 'zefei/vim-wintabs-powerline'
@@ -125,7 +122,7 @@ repo = 'lambdalisue/fern-git-status.vim'
 repo = 'ap/vim-buftabline'
 
 [[plugins]]
-repo = 'williamboman/nvim-lsp-installer'
+repo = 'vim-denops/denops.vim'
 
 [[plugins]]
 hook_add = '''
@@ -138,86 +135,6 @@ hook_add = '''
 repo = 'lambdalisue/glyph-palette.vim'
 
 [[plugins]]
-hook_add = '''
-inoremap <silent><expr> <TAB>
-\ pumvisible() ? '<C-n>' :
-\ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
-\ '<TAB>' : ddc#manual_complete()
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-call ddc#custom#patch_global('sources', ['nvim-lsp', 'around', 'vsnip', 'file'])
-call ddc#custom#patch_global('sourceOptions', {
-		\ '_': {
-		\   'matchers': ['matcher_head'],
-		\   'sorters': ['sorter_rank'],
-		\ },
-		\ 'around': {'mark': 'A'},
-		\ 'file': {
-		\   'mark': 'F',
-		\   'isVolatile': v:true,
-		\   'forceCompletionPattern': '\S/\S*',
-		\ },
-		\ 'nvim-lsp': {
-		\ 'mark': 'LSP',
-		\ 'forceCompletionPattern': '\.\w*|:\w*|->\w*',
-		\ },
-		\ })
-
-call ddc#custom#patch_global('sourceParams', {
-		\ 'around': {'maxSize': 500},
-		\ 'file': {'smartCase': v:true},
-		\ })
-
-call ddc#custom#patch_filetype(
-		\ ['ps1', 'dosbatch', 'autohotkey', 'registry'], {
-		\ 'sourceOptions': {
-		\   'file': {
-		\     'forceCompletionPattern': '\S\\\S*',
-		\   },
-		\ },
-		\ 'sourceParams': {
-		\   'file': {
-		\     'mode': 'win32',
-		\   },
-		\ }})
-
-call ddc#enable()
-	'''
-repo = 'Shougo/ddc.vim'
-
-[[plugins]]
-repo = 'vim-denops/denops.vim'
-
-[[plugins]]
-on_source = 'ddc.vim'
-repo = 'Shougo/ddc-around'
-
-[[plugins]]
-on_source = 'ddc.vim'
-repo = 'Shougo/ddc-matcher_head'
-
-[[plugins]]
-on_source = 'ddc.vim'
-repo = 'Shougo/ddc-sorter_rank'
-
-[[plugins]]
-on_source = 'ddc.vim'
-repo = 'LumaKernel/ddc-file'
-
-[[plugins]]
-on_source = 'ddc.vim'
-repo = 'Shougo/ddc-nvim-lsp'
-
-# [[plugins]]
-# on_source = 'ddc.vim'
-# repo = 'hrsh7th/vim-vsnip-integ'
-
-# [[plugins]]
-# on_source = 'ddc.vim'
-# repo = 'hrsh7th/vim-vsnip'
-
-[[plugins]]
-on_source = 'ddc.vim'
 repo = 'tomasiser/vim-code-dark'
 
 [[plugins]]
@@ -248,28 +165,16 @@ command! -nargs=* -bang RG call FZGrep(<q-args>, <bang>0)
 '''
 
 [[plugins]]
-repo = 'prabirshrestha/asyncomplete.vim'
-
-[[plugins]]
-repo = 'prabirshrestha/asyncomplete-lsp.vim'
-
-[[plugins]]
-repo = 'prabirshrestha/vim-lsp'
-
-[[plugins]]
-repo = 'mattn/vim-lsp-settings'
-
-[[plugins]]
 repo = 'SirVer/ultisnips'
 
 [[plugins]]
 repo = 'honza/vim-snippets'
 
 [[plugins]]
-repo = 'thomasfaingnaert/vim-lsp-snippets'
+repo = 'kamykn/spelunker.vim'
 
 [[plugins]]
-repo = 'thomasfaingnaert/vim-lsp-ultisnips'
+repo = 'Shougo/junkfile.vim'
 
 [[plugins]]
 repo = 'hrsh7th/vim-vsnip'
@@ -278,10 +183,122 @@ repo = 'hrsh7th/vim-vsnip'
 repo = 'hrsh7th/vim-vsnip-integ'
 
 [[plugins]]
-repo = 'mattn/vim-goimports'
+repo = 'nvim-telescope/telescope.nvim'
+depends = ['ripgrep','fd','nvim-treesitter','nvim-web-devicons']
+hook_add = '''
+lua <<  EOF
+require("telescope").setup{
+defaults = {
+mappings = {
+n = {
+["|"] = "file_vsplit",
+["-"] = "file_split"
+},
+},
+},
+}
+EOF
+'''
 
 [[plugins]]
-repo = 'neovim/nvim-laspconfig'
+repo = 'BurntSushi/ripgrep'
 
 [[plugins]]
-repo = 'rust-lang/rust.vim'
+repo = 'nvim-treesitter/nvim-treesitter' 
+
+[[plugins]]
+repo = 'sharkdp/fd' 
+
+[[plugins]]
+repo = 'kyazdani42/nvim-web-devicons'
+
+[[plugins]]
+repo = 'folke/trouble.nvim'
+hook_add = '''
+lua << EOF
+  require("trouble").setup {}
+EOF
+'''
+
+[[plugins]]
+repo = 'williamboman/mason.nvim'
+
+[[plugins]]
+repo = 'williamboman/mason-lspconfig.nvim'
+
+[[plugins]]
+repo = 'Shougo/ddc-nvim-lsp'
+
+[[plugins]]
+repo = 'Shougo/ddc-around'
+
+[[plugins]]
+repo = 'Shougo/ddc-matcher_head'
+
+[[plugins]]
+repo = 'Shougo/ddc-sorter_rank'
+
+[[plugins]]
+repo = 'neovim/nvim-lspconfig'
+
+[[plugins]]
+repo = 'tani/ddc-fuzzy'
+
+[[plugins]]
+hook_add = '''
+  call ddc#custom#alias('filter', 'matcher_initial', 'matcher_head')
+  call ddc#custom#patch_global('filterParams', {
+	      \ 'matcher_initial': {
+	      \   'maxMatchLength': 1,
+	      \ },
+	      \ })
+
+
+  call ddc#custom#patch_global('sources', ['nvim-lsp', 'around'])
+  call ddc#custom#patch_global('sourceOptions', {
+        \ '_': {
+        \   'matchers': ['matcher_initial','matcher_fuzzy'],
+	\   'sorters': ['sorter_rank','sorter_fuzzy'],
+	\   'converters': ['converter_fuzzy'],
+	\  },
+        \ 'around': {
+        \   'mark': '[A]' },
+        \ 'nvim-lsp': {
+        \   'mark': '[L]',
+        \   'forceCompletionPattern': '\.\w*|:\w*|->\w*' },
+        \ })
+
+  " don't show complete preview window
+  set completeopt-=preview
+  call ddc#enable()
+	'''
+depends = ['denops.vim','nvim-lspconfig']
+repo = 'Shougo/ddc.vim'
+
+[[plugins]]
+repo = 'matsui54/denops-signature_help'
+depends = ['denops.vim']
+hook_add = '''
+call signature_help#enable()
+let g:signature_help_config = {
+	      \ 'border': v:true,
+	      \ 'maxWidth': 80,
+	      \ 'maxHeight': 30,
+	      \ 'style': "labelOnly",
+	      \ 'onTriggerChar': v:false,
+	      \ 'multiLabel': v:true,
+	      \ 'fallbackToBelow': v:true,
+	      \ }
+'''
+
+[[plugins]]
+repo = 'matsui54/denops-popup-preview.vim'
+depends = ['denops.vim']
+hook_add = '''
+call popup_preview#enable()
+let g:popup_preview_config = {
+	      \ 'maxWidth': 60,
+	      \ 'maxHeight': 30,
+	      \ }
+'''
+

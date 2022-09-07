@@ -1,50 +1,76 @@
-function! s:on_lsp_buffer_enabled() abort
-  setlocal omnifunc=lsp#complete
-  setlocal signcolumn=yes
-  nmap <buffer> gd <plug>(lsp-definition)
-  nmap <buffer> <C-]> <plug>(lsp-definition)
-  nmap <buffer> <f2> <plug>(lsp-rename)
-  nmap <buffer> <Leader>d <plug>(lsp-type-definition)
-  nmap <buffer> <Leader>r <plug>(lsp-references)
-  nmap <buffer> <Leader>i <plug>(lsp-implementation)
-  inoremap <expr> <cr> pumvisible() ? "\<c-y>\<cr>" : "\<cr>"
-endfunction
+local mason = require("mason")
+mason.setup()
 
-augroup lsp_install
-  au!
-  autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
-augroup END
-command! LspDebug let lsp_log_verbose=1 | let lsp_log_file = expand('~/lsp.log')
+-- format on save
+vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.formatting_sync({tabSize = 2, insertSpaces = false})]]
+-- vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format({ async = true })]]
 
-let g:lsp_diagnostics_enabled = 1
-let g:lsp_diagnostics_echo_cursor = 1
-" let g:asyncomplete_auto_popup = 1
-" let g:asyncomplete_auto_completeopt = 0
-let g:asyncomplete_popup_delay = 200
-let g:lsp_text_edit_enabled = 1
-let g:lsp_preview_float = 1
-let g:lsp_diagnostics_float_cursor = 1
-let g:lsp_settings_filetype_go = ['gopls', 'golangci-lint-langserver']
+-- local servers = { 'solargraph', 'tsserver', 'gopls', 'rust_analyzer','sumneko_lua' }
+local nvim_lsp = require('lspconfig')
 
-let g:lsp_settings = {}
-let g:lsp_settings['gopls'] = {
-  \  'workspace_config': {
-  \    'usePlaceholders': v:true,
-  \    'analyses': {
-  \      'fillstruct': v:true,
-  \    },
-  \  },
-  \  'initialization_options': {
-  \    'usePlaceholders': v:true,
-  \    'analyses': {
-  \      'fillstruct': v:true,
-  \    },
-  \  },
-  \}
+local mason_lspconfig = require('mason-lspconfig')
 
-" For snippets
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+local on_attach = function(client, _)
+	if client.name == 'tsserver' then
+		-- HACK: neovim 0.8 change client_capabilities => server_capabilities
+		-- client.server_capabilities.document_formatting = false
+		-- client.server_capabilities.document_range_formatting = false
+		client.resolved_capabilities.document_formatting = false
+	end
+end
 
-set completeopt+=menuone
+local null_ls = require("null-ls")
+
+null_ls.setup({
+	sources = {
+		null_ls.builtins.diagnostics.misspell,
+		null_ls.builtins.formatting.prettier,
+	}
+})
+
+mason_lspconfig.setup_handlers({
+	function(server_name)
+		local opts = {
+
+		}
+		opts.on_attach = on_attach
+		opts.flags = {
+			debounce_text_changes = 150,
+		}
+
+		if server_name == "sumneko_lua" then
+			opts.settings = {
+				Lua = {
+					diagnostics = { globals = { 'vim', 'use' } },
+				}
+			}
+		end
+
+		if server_name == "tsserver" then
+			opts.settings = {
+				javascript = {
+					format = { enable = false },
+				},
+				typescript = {
+					format = { enable = false },
+				},
+			}
+		end
+
+
+		nvim_lsp[server_name].setup(opts)
+	end
+})
+
+-- for _, lsp in ipairs(servers) do
+-- 	nvim_lsp[lsp].setup {
+-- 		flags = {
+-- 			debounce_text_changes = 150,
+-- 		},
+-- 		settings = {
+-- 			solargraph = {
+-- 				diagnostics = false
+-- 			}
+-- 		}
+-- 	}
+-- end
