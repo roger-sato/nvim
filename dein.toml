@@ -68,15 +68,6 @@ let g:winresizer_start_key = '<leader>E'
 [[plugins]]
 repo = 'vim-scripts/ReplaceWithRegister'
 
-# [[plugins]]
-# repo = 'zefei/vim-wintabs'
-# hook_add = ''' map <C-n> <Plug>(wintabs_previous)
-#   map <C-p> <Plug>(wintabs_next)
-#   map <C-q> <Plug>(wintabs_close)
-#   map <C-T>u <Plug>(wintabs_undo)
-#   map <C-T><C-o> <Plug>(wintabs_only)
-# '''
-
 [[plugins]]
 repo = 'nvim-lua/plenary.nvim'
 
@@ -173,18 +164,6 @@ command! -nargs=* -bang RG call FZGrep(<q-args>, <bang>0)
     \   fzf#vim#with_preview({'options': '--exact --reverse'}, 'right:50%:wrap'))
 '''
 
-# [[plugins]]
-# repo = 'prabirshrestha/asyncomplete.vim'
-
-# [[plugins]]
-# repo = 'prabirshrestha/asyncomplete-lsp.vim'
-
-# [[plugins]]
-# repo = 'prabirshrestha/vim-lsp'
-
-# [[plugins]]
-# repo = 'mattn/vim-lsp-settings'
-
 [[plugins]]
 repo = 'SirVer/ultisnips'
 
@@ -194,12 +173,6 @@ repo = 'honza/vim-snippets'
 [[plugins]]
 repo = 'kamykn/spelunker.vim'
 
-# [[plugins]]
-# repo = 'thomasfaingnaert/vim-lsp-snippets'
-
-# [[plugins]]
-# repo = 'thomasfaingnaert/vim-lsp-ultisnips'
-
 [[plugins]]
 repo = 'Shougo/junkfile.vim'
 
@@ -208,16 +181,6 @@ repo = 'hrsh7th/vim-vsnip'
 
 [[plugins]]
 repo = 'hrsh7th/vim-vsnip-integ'
-
-# [[plugins]]
-# repo = 'mattn/vim-goimports'
-
-# [[plugins]]
-# repo = 'rust-lang/rust.vim'
-
-
-# [[plugins]]
-# repo = 'williamboman/nvim-lsp-installer'
 
 [[plugins]]
 repo = 'nvim-telescope/telescope.nvim'
