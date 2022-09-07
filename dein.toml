@@ -78,6 +78,12 @@ repo = 'vim-scripts/ReplaceWithRegister'
 # '''
 
 [[plugins]]
+repo = 'nvim-lua/plenary.nvim'
+
+[[plugins]]
+repo = 'jose-elias-alvarez/null-ls.nvim'
+
+[[plugins]]
 repo = 'zefei/vim-wintabs-powerline'
 
 [[plugins]]
@@ -210,14 +216,52 @@ repo = 'hrsh7th/vim-vsnip-integ'
 # repo = 'rust-lang/rust.vim'
 
 
+# [[plugins]]
+# repo = 'williamboman/nvim-lsp-installer'
+
 [[plugins]]
-repo = 'williamboman/nvim-lsp-installer'
+repo = 'nvim-telescope/telescope.nvim'
+depends = ['ripgrep','fd','nvim-treesitter','nvim-web-devicons']
+hook_add = '''
+lua <<  EOF
+require("telescope").setup{
+defaults = {
+mappings = {
+n = {
+["|"] = "file_vsplit",
+["-"] = "file_split"
+},
+},
+},
+}
+EOF
+'''
 
-# [[plugins]]
-# repo = 'williamboman/mason.nvim'
+[[plugins]]
+repo = 'BurntSushi/ripgrep'
 
-# [[plugins]]
-# repo = 'williamboman/mason-lspconfig.nvim'
+[[plugins]]
+repo = 'nvim-treesitter/nvim-treesitter' 
+
+[[plugins]]
+repo = 'sharkdp/fd' 
+
+[[plugins]]
+repo = 'kyazdani42/nvim-web-devicons'
+
+[[plugins]]
+repo = 'folke/trouble.nvim'
+hook_add = '''
+lua << EOF
+  require("trouble").setup {}
+EOF
+'''
+
+[[plugins]]
+repo = 'williamboman/mason.nvim'
+
+[[plugins]]
+repo = 'williamboman/mason-lspconfig.nvim'
 
 [[plugins]]
 repo = 'Shougo/ddc-nvim-lsp'
@@ -233,29 +277,36 @@ repo = 'Shougo/ddc-sorter_rank'
 
 [[plugins]]
 repo = 'neovim/nvim-lspconfig'
-depends = ['nvim-lsp-installer']
+
+[[plugins]]
+repo = 'tani/ddc-fuzzy'
 
 [[plugins]]
 hook_add = '''
+  call ddc#custom#alias('filter', 'matcher_initial', 'matcher_head')
+  call ddc#custom#patch_global('filterParams', {
+	      \ 'matcher_initial': {
+	      \   'maxMatchLength': 1,
+	      \ },
+	      \ })
+
+
   call ddc#custom#patch_global('sources', ['nvim-lsp', 'around'])
   call ddc#custom#patch_global('sourceOptions', {
         \ '_': {
-        \   'matchers': ['matcher_head'],
+        \   'matchers': ['matcher_initial','matcher_fuzzy'],
+	\   'sorters': ['sorter_rank','sorter_fuzzy'],
+	\   'converters': ['converter_fuzzy'],
 	\  },
         \ 'around': {
-        \   'mark': 'around' },
+        \   'mark': '[A]' },
         \ 'nvim-lsp': {
-        \   'mark': 'lsp',
+        \   'mark': '[L]',
         \   'forceCompletionPattern': '\.\w*|:\w*|->\w*' },
         \ })
 
-  inoremap <silent><expr> <TAB>
-  \ ddc#map#pum_visible() ? '<C-n>' :
-  \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
-  \ '<TAB>' : ddc#map#manual_complete()
-
+  " don't show complete preview window
   set completeopt-=preview
-  inoremap <expr><S-TAB>  ddc#map#pum_visible() ? '<C-p>' : '<C-h>'
   call ddc#enable()
 	'''
 depends = ['denops.vim','nvim-lspconfig']
@@ -270,9 +321,9 @@ let g:signature_help_config = {
 	      \ 'border': v:true,
 	      \ 'maxWidth': 80,
 	      \ 'maxHeight': 30,
-	      \ 'style': "full",
+	      \ 'style': "labelOnly",
 	      \ 'onTriggerChar': v:false,
-	      \ 'multiLabel': v:false,
+	      \ 'multiLabel': v:true,
 	      \ 'fallbackToBelow': v:true,
 	      \ }
 '''

@@ -27,7 +27,19 @@ map('n', '<leader>h', '<C-w>h', ns)
 map('n', '<leader>w', '<cmd>w<cr>', ns)
 map('n', '<leader>q', '<cmd>q<cr>', ns)
 map('n', '<leader>t', '<cmd>T<cr>', ns)
+map('x', '<leader>p', '"0p', ns)
+map('n', '<leader>d', '"_d', ns)
+map('x', '<leader>d', '"_d', ns)
+map('n', '<leader>D', '"_D', ns)
+map('x', '<leader>D', '"_D', ns)
 map('n', ')', '$', ns)
+
+-- Trouble
+map('n', '<leader>xx', '<cmd>TroubleToggle<cr>', ns)
+map('n', '<leader>xw', '<cmd>TroubleToggle workspace_diagnostics<cr>', ns)
+map('n', '<leader>xd', '<cmd>TroubleToggle document_diagnostics<cr>', ns)
+map('n', '<leader>xq', '<cmd>TroubleToggle quickfix<cr>', ns)
+map('n', '<leader>xl', '<cmd>TroubleToggle loclist<cr>', ns)
 
 -- lsp
 map('n', 'gh', '<cmd>lua vim.lsp.buf.hover()<cr>', ns)
@@ -47,10 +59,21 @@ map('n', 'gwa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', ns)
 map('n', 'gwb', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', ns)
 map('n', 'gll', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', ns)
 
-map('n', '<leader>p', '<cmd>GFiles<cr>', ns)
-map('n', '<leader>P', '<cmd>Files<cr>', ns)
-map('n', '<leader>f', '<cmd>RG<cr>', ns)
-map('n', '<D-f>', '<cmd>RG<cr>', ns)
+-- map('n', '<leader><leader>p', '<cmd>GFiles<cr>', ns)
+-- map('n', '<leader><leader>P', '<cmd>Files<cr>', ns)
+-- map('n', '<leader><leader>f', '<cmd>RG<cr>', ns)
+--
+-- telescope
+map('n', '<leader>ff', '<cmd>lua require("telescope.builtin").find_files()<cr>', ns)
+map('n', '<leader>fg', '<cmd>lua require("telescope.builtin").live_grep()<cr>', ns)
+map('n', '<leader>fb', '<cmd>lua require("telescope.builtin").buffers()<cr>', ns)
+map('n', '<leader>fh', '<cmd>lua require("telescope.builtin").help_tags()<cr>', ns)
+map('n', '<leader>fp', '<cmd>lua require("telescope.builtin").registers()<cr>', ns)
+map('n', '<leader>fk', '<cmd>lua require("telescope.builtin").keymaps()<cr>', ns)
+map('n', '<leader>ft', '<cmd>lua require("telescope.builtin").filetypes()<cr>', ns)
+map('n', '<leader>fj', '<cmd>lua require("telescope.builtin").jumplist()<cr>', ns)
+
+map('n', '<leader>lr', '<cmd>lua require("telescope.builtin").references()<cr>', ns)
 
 map('v', 'j', 'gj', ns)
 map('v', 'k', 'gk', ns)
