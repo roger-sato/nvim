@@ -78,6 +78,9 @@ repo = 'jose-elias-alvarez/null-ls.nvim'
 repo = 'zefei/vim-wintabs-powerline'
 
 [[plugins]]
+repo = 'kat0h/bufpreview.vim'
+
+[[plugins]]
 repo = 'wellle/targets.vim'
 
 [[plugins]]
@@ -86,18 +89,9 @@ hook_add = '''
 	'''
 repo = 'lambdalisue/gina.vim'
 
+
 [[plugins]]
-hook_add = '''
-	nmap <leader>gl <Plug>(GitGutterNextHunk)
-	nmap <leader>gh <Plug>(GitGutterPrevHunk)
-	nmap <leader>gt <Plug>(GitGutterLineHighlightsToggle)
-	nmap <leader>gd <Plug>(GitGutterPreviewHunk)
-	highlight GitGutterAdd ctermfg=green
-	highlight GitGutterChange ctermfg=blue
-	highlight GitGutterDelete ctermfg=red
-	set updatetime=250
-	'''
-repo = 'airblade/vim-gitgutter'
+repo = 'gko/vim-coloresque'
 
 [[plugins]]
 hook_add = '''
@@ -138,6 +132,21 @@ repo = 'lambdalisue/glyph-palette.vim'
 repo = 'tomasiser/vim-code-dark'
 
 [[plugins]]
+repo = 'wadackel/vim-dogrun'
+
+[[plugins]]
+repo = 'NLKNguyen/papercolor-theme'
+
+[[plugins]]
+repo = 'EdenEast/nightfox.nvim'
+
+[[plugins]]
+repo = 'jacoborus/tender.vim'
+
+[[plugins]]
+repo = 'habamax/vim-gruvbit'
+
+[[plugins]]
 repo = 'chr4/nginx.vim'
 
 [[plugins]]
@@ -174,6 +183,18 @@ repo = 'honza/vim-snippets'
 repo = 'kamykn/spelunker.vim'
 
 [[plugins]]
+repo = 'akinsho/toggleterm.nvim'
+hook_add = '''
+lua << EOF
+require('toggleterm').setup({
+})
+EOF
+'''
+
+[[plugins]]
+repo = 'kdheepak/lazygit.nvim'
+
+[[plugins]]
 repo = 'Shougo/junkfile.vim'
 
 [[plugins]]
@@ -189,6 +210,7 @@ hook_add = '''
 lua <<  EOF
 require("telescope").setup{
 defaults = {
+file_ignore_patterns = {"./node_modules/*", "node_modules", "^node_modules/*", "node_modules/*",".git/*"},
 mappings = {
 n = {
 ["|"] = "file_vsplit",
@@ -245,6 +267,9 @@ repo = 'neovim/nvim-lspconfig'
 repo = 'tani/ddc-fuzzy'
 
 [[plugins]]
+repo = 'chrisbra/csv.vim'
+
+[[plugins]]
 hook_add = '''
   call ddc#custom#alias('filter', 'matcher_initial', 'matcher_head')
   call ddc#custom#patch_global('filterParams', {
@@ -257,9 +282,10 @@ hook_add = '''
   call ddc#custom#patch_global('sources', ['nvim-lsp', 'around'])
   call ddc#custom#patch_global('sourceOptions', {
         \ '_': {
-        \   'matchers': ['matcher_initial','matcher_fuzzy'],
-	\   'sorters': ['sorter_rank','sorter_fuzzy'],
+        \   'matchers': ['matcher_fuzzy'],
+	\   'sorters': ['sorter_fuzzy'],
 	\   'converters': ['converter_fuzzy'],
+	\   'ignoreCase': v:true,
 	\  },
         \ 'around': {
         \   'mark': '[A]' },

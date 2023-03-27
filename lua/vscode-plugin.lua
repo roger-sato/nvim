@@ -10,7 +10,7 @@ end
 -- begin settings
 if (vim.fn['dein#load_state'](dein_dir) == 1) then
 	local rc_dir = vim.fn.expand('~/.config/nvim')
-	local toml = rc_dir .. '/dein.toml'
+	local toml = rc_dir .. '/dein-vscode.toml'
 	local lazy_toml = rc_dir .. '/dein_lazy.toml'
 	vim.fn['dein#begin'](dein_dir)
 	vim.fn['dein#load_toml'](toml, { lazy = 0 })

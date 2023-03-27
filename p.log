@@ -1,0 +1,518 @@
+FUNCTION  gitgutter#process_buffer()
+    Defined: ~/.cache/dein/.cache/init.vim/.dein/autoload/gitgutter.vim:21
+Called 13 times
+Total time:   0.012288
+ Self time:   0.001910
+
+count  total (s)   self (s)
+                              " NOTE a:bufnr is not necessarily the current buffer.
+                            
+   13   0.000653   0.000264   if gitgutter#utility#getbufvar(a:bufnr, 'enabled', -1) == -1
+                                call gitgutter#utility#setbufvar(a:bufnr, 'enabled', g:gitgutter_enabled)
+   13              0.000027   endif
+                            
+   13   0.008894   0.000206   if gitgutter#utility#is_active(a:bufnr)
+                            
+   13              0.000087     if has('patch-7.4.1559')
+   13              0.000131       let l:Callback = function('gitgutter#process_buffer', [a:bufnr, a:force])
+                                else
+                                  let l:Callback = {'function': 'gitgutter#process_buffer', 'arguments': [a:bufnr, a:force]}
+   13              0.000013     endif
+   13   0.001153   0.000237     let how = s:setup_path(a:bufnr, l:Callback)
+   13              0.000064     if [how] == ['async']  " avoid string-to-number conversion if how is a number
+                                  return
+   13              0.000011     endif
+                            
+   13   0.000519   0.000135     if a:force || s:has_fresh_changes(a:bufnr)
+                            
+                                  let diff = 'NOT SET'
+                                  try
+                                    let diff = gitgutter#diff#run_diff(a:bufnr, g:gitgutter_diff_relative_to, 0)
+                                  catch /gitgutter not tracked/
+                                    call gitgutter#debug#log('Not tracked: '.gitgutter#utility#file(a:bufnr))
+                                  catch /gitgutter assume unchanged/
+                                    call gitgutter#debug#log('Assume unchanged: '.gitgutter#utility#file(a:bufnr))
+                                  catch /gitgutter diff failed/
+                                    call gitgutter#debug#log('Diff failed: '.gitgutter#utility#file(a:bufnr))
+                                    call gitgutter#hunk#reset(a:bufnr)
+                                  endtry
+                            
+                                  if diff != 'async' && diff != 'NOT SET'
+                                    call gitgutter#diff#handler(a:bufnr, diff)
+                                  endif
+                            
+   13              0.000009     endif
+   13              0.000010   endif
+
+FUNCTION  spelunker#check_displayed_words()
+    Defined: ~/.cache/dein/.cache/init.vim/.dein/autoload/spelunker.vim:11
+Called 13 times
+Total time:   0.000807
+ Self time:   0.000251
+
+count  total (s)   self (s)
+   13   0.000672   0.000116 	if s:is_runnable() == 0
+                            		call s:clear_matches()
+                            		return 0
+   13              0.000007 	endif
+                            
+   13              0.000041 	if g:spelunker_check_type != g:spelunker_check_type_cursor_hold
+   13              0.000011 		return 0
+                            	endif
+                            
+                            	call spelunker#words#check_display_area()
+                            	return 1
+
+FUNCTION  <SNR>101_is_runnable()
+    Defined: ~/.cache/dein/.cache/init.vim/.dein/autoload/spelunker.vim:214
+Called 13 times
+Total time:   0.000556
+ Self time:   0.000272
+
+count  total (s)   self (s)
+   13   0.000415   0.000130 	if spelunker#toggle#is_enabled() == 0
+                            		return 0
+   13              0.000011 	endif
+                            
+   13              0.000052 	if g:enable_spelunker_vim_on_readonly == 0 && &readonly
+                            		return 0
+   13              0.000007 	endif
+                            
+   13              0.000012 	return 1
+
+FUNCTION  gitgutter#utility#has_repo_path()
+    Defined: ~/.cache/dein/.cache/init.vim/.dein/autoload/gitgutter/utility.vim:101
+Called 13 times
+Total time:   0.000752
+ Self time:   0.000206
+
+count  total (s)   self (s)
+   13   0.000743   0.000197   return index(['', -1, -2], gitgutter#utility#repo_path(a:bufnr, 0)) == -1
+
+FUNCTION  <SNR>43_abs_path()
+    Defined: ~/.cache/dein/.cache/init.vim/.dein/autoload/gitgutter/utility.vim:222
+Called 26 times
+Total time:   0.005824
+ Self time:   0.005824
+
+count  total (s)   self (s)
+   26              0.004543   let p = resolve(expand('#'.a:bufnr.':p'))
+                            
+                              " Remove extra parts from fugitive's filepaths
+   26              0.001000   let p = substitute(substitute(p, '^fugitive:', '', ''), '\v\.git/\x{40,}/', '', '')
+                            
+   26              0.000149   return a:shellesc ? gitgutter#utility#shellescape(p) : p
+
+FUNCTION  <SNR>130__exists()
+    Defined: ~/.cache/dein/.cache/init.vim/.dein/autoload/vital/_signature_help/VS/Vim/Window/FloatingWindow.vim:331
+Called 185 times
+Total time:   0.003191
+ Self time:   0.003191
+
+count  total (s)   self (s)
+  185              0.000447     try
+  185              0.001704       return type(a:winid) == type(0) && nvim_win_is_valid(a:winid) && nvim_win_get_number(a:winid) != -1
+                                catch /.*/
+                                  return v:false
+  185              0.000282     endtry
+
+FUNCTION  47()
+    Defined: ~/.cache/dein/.cache/init.vim/.dein/autoload/vital/_signature_help/VS/Vim/Window/FloatingWindow.vim:233
+Called 185 times
+Total time:   0.008758
+ Self time:   0.003115
+
+count  total (s)   self (s)
+  185   0.007212   0.001569   if self.is_visible()
+                                call s:_close(self._winid)
+  185              0.000134   endif
+  185              0.000648   let self._winid = v:null
+
+FUNCTION  49()
+    Defined: ~/.cache/dein/.cache/init.vim/.dein/autoload/vital/_signature_help/VS/Vim/Window/FloatingWindow.vim:250
+Called 185 times
+Total time:   0.005643
+ Self time:   0.002452
+
+count  total (s)   self (s)
+  185   0.005509   0.002318   return s:_exists(self._winid) ? v:true : v:false
+
+FUNCTION  <SNR>84_Remove_Matches()
+    Defined: /usr/local/Cellar/neovim/0.7.2_1/share/nvim/runtime/plugin/matchparen.vim:197
+Called 185 times
+Total time:   0.001844
+ Self time:   0.001844
+
+count  total (s)   self (s)
+  185              0.000701   if exists('w:paren_hl_on') && w:paren_hl_on
+   24              0.000203     silent! call matchdelete(3)
+   24              0.000050     let w:paren_hl_on = 0
+  185              0.000123   endif
+
+FUNCTION  <SNR>43_not_git_dir()
+    Defined: ~/.cache/dein/.cache/init.vim/.dein/autoload/gitgutter/utility.vim:58
+Called 13 times
+Total time:   0.003120
+ Self time:   0.000268
+
+count  total (s)   self (s)
+   13   0.003109   0.000257   return s:dir(a:bufnr) !~ '[/\\]\.git\($\|[/\\]\)'
+
+FUNCTION  spelunker#toggle#is_enabled()
+    Defined: ~/.cache/dein/.cache/init.vim/.dein/autoload/spelunker/toggle.vim:65
+Called 13 times
+Total time:   0.000285
+ Self time:   0.000222
+
+count  total (s)   self (s)
+   13              0.000071 	if !exists('b:enable_spelunker_vim')
+   13   0.000184   0.000122 		if spelunker#toggle#is_enabled_global() == 1
+   13              0.000012 			return 1
+                            		endif
+                            
+                            		return 0
+                            	else
+                            		" b:enable_spelunker_vimがあればbuffer優先
+                            		if spelunker#toggle#is_enabled_buffer() == 1
+                            			return 1
+                            		else
+                            			return 0
+                            		endif
+                            
+                            		if spelunker#toggle#is_enabled_global() == 0
+                            			return 0
+                            		endif
+                            
+                            		return 1
+                            	endif
+
+FUNCTION  gitgutter#utility#shellescape()
+    Defined: ~/.cache/dein/.cache/init.vim/.dein/autoload/gitgutter/utility.vim:72
+Called 13 times
+Total time:   0.000374
+ Self time:   0.000374
+
+count  total (s)   self (s)
+   13              0.000330   if a:arg =~ '^[A-Za-z0-9_/.-]\+$'
+   13              0.000026     return a:arg
+                              elseif s:winshell()
+                                return '"' . substitute(substitute(a:arg, '"', '""', 'g'), '%', '"%"', 'g') . '"'
+                              else
+                                return shellescape(a:arg)
+                              endif
+
+FUNCTION  <SNR>84_Highlight_Matching_Pair()
+    Defined: /usr/local/Cellar/neovim/0.7.2_1/share/nvim/runtime/plugin/matchparen.vim:40
+Called 185 times
+Total time:   0.029045
+ Self time:   0.027200
+
+count  total (s)   self (s)
+                              " Remove any previous match.
+  185   0.003441   0.001597   call s:Remove_Matches()
+                            
+                              " Avoid that we remove the popup menu.
+                              " Return when there are no colors (looks like the cursor jumps).
+  185              0.000936   if pumvisible() || (&t_Co < 8 && !has("gui_running"))
+                                return
+  185              0.000093   endif
+                            
+                              " Get the character under the cursor and check if it's in 'matchpairs'.
+  185              0.000588   let c_lnum = line('.')
+  185              0.000445   let c_col = col('.')
+  185              0.000221   let before = 0
+                            
+  185              0.000530   let text = getline(c_lnum)
+  185              0.003636   let matches = matchlist(text, '\(.\)\=\%'.c_col.'c\(.\=\)')
+  185              0.000474   if empty(matches)
+                                let [c_before, c] = ['', '']
+  185              0.000149   else
+  185              0.000877     let [c_before, c] = matches[1:2]
+  185              0.000116   endif
+  185              0.002896   let plist = split(&matchpairs, '.\zs[:,]')
+  185              0.000632   let i = index(plist, c)
+  185              0.000225   if i < 0
+                                " not found, in Insert mode try character before the cursor
+  161              0.000742     if c_col > 1 && (mode() == 'i' || mode() == 'R')
+                                  let before = strlen(c_before)
+                                  let c = c_before
+                                  let i = index(plist, c)
+  161              0.000104     endif
+  161              0.000170     if i < 0
+                                  " not found, nothing to do
+  161              0.000140       return
+                                endif
+   24              0.000012   endif
+                            
+                              " Figure out the arguments for searchpairpos().
+   24              0.000029   if i % 2 == 0
+    6              0.000009     let s_flags = 'nW'
+    6              0.000014     let c2 = plist[i + 1]
+   18              0.000009   else
+   18              0.000025     let s_flags = 'nbW'
+   18              0.000025     let c2 = c
+   18              0.000038     let c = plist[i - 1]
+   24              0.000011   endif
+   24              0.000033   if c == '['
+   15              0.000014     let c = '\['
+   15              0.000014     let c2 = '\]'
+   24              0.000011   endif
+                            
+                              " Find the match.  When it was just before the cursor move it there for a
+                              " moment.
+   24              0.000025   if before > 0
+                                let has_getcurpos = exists("*getcurpos")
+                                if has_getcurpos
+                                  " getcurpos() is more efficient but doesn't exist before 7.4.313.
+                                  let save_cursor = getcurpos()
+                                else
+                                  let save_cursor = winsaveview()
+                                endif
+                                call cursor(c_lnum, c_col - before)
+   24              0.000011   endif
+                            
+   24              0.000114   if !has("syntax") || !exists("g:syntax_on")
+                                let s_skip = "0"
+   24              0.000012   else
+                                " Build an expression that detects whether the current cursor position is
+                                " in certain syntax types (string, comment, etc.), for use as
+                                " searchpairpos()'s skip argument.
+                                " We match "escape" for special items, such as lispEscapeSpecial, and
+                                " match "symbol" for lispBarSymbol.
+   24              0.000106     let s_skip = '!empty(filter(map(synstack(line("."), col(".")), ''synIDattr(v:val, "name")''), ' . '''v:val =~? "string\\|character\\|singlequote\\|escape\\|symbol\\|comment"''))'
+                                " If executing the expression determines that the cursor is currently in
+                                " one of the syntax types, then we want searchpairpos() to find the pair
+                                " within those syntax types (i.e., not skip).  Otherwise, the cursor is
+                                " outside of the syntax types and s_skip should keep its value so we skip
+                                " any matching pair inside the syntax types.
+                                " Catch if this throws E363: pattern uses more memory than 'maxmempattern'.
+   24              0.000019     try
+   24              0.002063       execute 'if ' . s_skip . ' | let s_skip = "0" | endif'
+                                catch /^Vim\%((\a\+)\)\=:E363/
+                                  " We won't find anything, so skip searching, should keep Vim responsive.
+                                  return
+   24              0.000020     endtry
+   24              0.000012   endif
+                            
+                              " Limit the search to lines visible in the window.
+   24              0.000084   let stoplinebottom = line('w$')
+   24              0.000054   let stoplinetop = line('w0')
+   24              0.000032   if i % 2 == 0
+    6              0.000013     let stopline = stoplinebottom
+   18              0.000009   else
+   18              0.000038     let stopline = stoplinetop
+   24              0.000010   endif
+                            
+                              " Limit the search time to 300 msec to avoid a hang on very long lines.
+                              " This fails when a timeout is not supported.
+   24              0.000075   if mode() == 'i' || mode() == 'R'
+                                let timeout = exists("b:matchparen_insert_timeout") ? b:matchparen_insert_timeout : g:matchparen_insert_timeout
+   24              0.000010   else
+   24              0.000106     let timeout = exists("b:matchparen_timeout") ? b:matchparen_timeout : g:matchparen_timeout
+   24              0.000011   endif
+   24              0.000016   try
+   24              0.003989     let [m_lnum, m_col] = searchpairpos(c, '', c2, s_flags, s_skip, stopline, timeout)
+                              catch /E118/
+                                " Can't use the timeout, restrict the stopline a bit more to avoid taking
+                                " a long time on closed folds and long lines.
+                                " The "viewable" variables give a range in which we can scroll while
+                                " keeping the cursor at the same position.
+                                " adjustedScrolloff accounts for very large numbers of scrolloff.
+                                let adjustedScrolloff = min([&scrolloff, (line('w$') - line('w0')) / 2])
+                                let bottom_viewable = min([line('$'), c_lnum + &lines - adjustedScrolloff - 2])
+                                let top_viewable = max([1, c_lnum-&lines+adjustedScrolloff + 2])
+                                " one of these stoplines will be adjusted below, but the current values are
+                                " minimal boundaries within the current window
+                                if i % 2 == 0
+                                  if has("byte_offset") && has("syntax_items") && &smc > 0
+                            	let stopbyte = min([line2byte("$"), line2byte(".") + col(".") + &smc * 2])
+                            	let stopline = min([bottom_viewable, byte2line(stopbyte)])
+                                  else
+                            	let stopline = min([bottom_viewable, c_lnum + 100])
+                                  endif
+                                  let stoplinebottom = stopline
+                                else
+                                  if has("byte_offset") && has("syntax_items") && &smc > 0
+                            	let stopbyte = max([1, line2byte(".") + col(".") - &smc * 2])
+                            	let stopline = max([top_viewable, byte2line(stopbyte)])
+                                  else
+                            	let stopline = max([top_viewable, c_lnum - 100])
+                                  endif
+                                  let stoplinetop = stopline
+                                endif
+                                let [m_lnum, m_col] = searchpairpos(c, '', c2, s_flags, s_skip, stopline)
+   24              0.000021   endtry
+                            
+   24              0.000030   if before > 0
+                                if has_getcurpos
+                                  call setpos('.', save_cursor)
+                                else
+                                  call winrestview(save_cursor)
+                                endif
+   24              0.000011   endif
+                            
+                              " If a match is found setup match highlighting.
+   24              0.000077   if m_lnum > 0 && m_lnum >= stoplinetop && m_lnum <= stoplinebottom 
+   24              0.000069     if exists('*matchaddpos')
+   24              0.000308       call matchaddpos('MatchParen', [[c_lnum, c_col - before], [m_lnum, m_col]], 10, 3)
+                                else
+                                  exe '3match MatchParen /\(\%' . c_lnum . 'l\%' . (c_col - before) . 'c\)\|\(\%' . m_lnum . 'l\%' . m_col . 'c\)/'
+   24              0.000012     endif
+   24              0.000041     let w:paren_hl_on = 1
+   24              0.000012   endif
+
+FUNCTION  gitgutter#utility#repo_path()
+    Defined: ~/.cache/dein/.cache/init.vim/.dein/autoload/gitgutter/utility.vim:112
+Called 13 times
+Total time:   0.000546
+ Self time:   0.000284
+
+count  total (s)   self (s)
+   13   0.000485   0.000223   let p = gitgutter#utility#getbufvar(a:bufnr, 'path', '')
+   13              0.000051   return a:shellesc ? gitgutter#utility#shellescape(p) : p
+
+FUNCTION  <SNR>110_setup_path()
+    Defined: ~/.cache/dein/.cache/init.vim/.dein/autoload/gitgutter.vim:169
+Called 13 times
+Total time:   0.000916
+ Self time:   0.000164
+
+count  total (s)   self (s)
+   13   0.000905   0.000153   if gitgutter#utility#has_repo_path(a:bufnr) | return | endif
+                            
+                              return gitgutter#utility#set_repo_path(a:bufnr, a:continuation)
+
+FUNCTION  <SNR>110_has_fresh_changes()
+    Defined: ~/.cache/dein/.cache/init.vim/.dein/autoload/gitgutter.vim:175
+Called 13 times
+Total time:   0.000384
+ Self time:   0.000215
+
+count  total (s)   self (s)
+   13   0.000376   0.000206   return getbufvar(a:bufnr, 'changedtick') != gitgutter#utility#getbufvar(a:bufnr, 'tick')
+
+FUNCTION  signature_help#doc#close_floating()
+    Defined: ~/.cache/dein/.cache/init.vim/.dein/autoload/signature_help/doc.vim:21
+Called 185 times
+Total time:   0.014302
+ Self time:   0.005544
+
+count  total (s)   self (s)
+  185   0.010642   0.001884   call s:win.close()
+  185              0.000822   if has('nvim')
+  185              0.000496     if !exists('s:ns_v')
+                                  let s:ns_v = nvim_create_namespace('dps_signature_help_v')
+  185              0.000110     endif
+  185              0.001171     call nvim_buf_clear_namespace(0, s:ns_v, 0, -1)
+  185              0.000124   endif
+
+FUNCTION  <SNR>43_is_file_buffer()
+    Defined: ~/.cache/dein/.cache/init.vim/.dein/autoload/gitgutter/utility.vim:62
+Called 13 times
+Total time:   0.000123
+ Self time:   0.000123
+
+count  total (s)   self (s)
+   13              0.000111   return empty(getbufvar(a:bufnr, '&buftype'))
+
+FUNCTION  gitgutter#utility#is_active()
+    Defined: ~/.cache/dein/.cache/init.vim/.dein/autoload/gitgutter/utility.vim:50
+Called 13 times
+Total time:   0.008688
+ Self time:   0.000770
+
+count  total (s)   self (s)
+   13   0.008672   0.000753   return gitgutter#utility#getbufvar(a:bufnr, 'enabled') && !pumvisible() && s:is_file_buffer(a:bufnr) && s:exists_file(a:bufnr) && s:not_git_dir(a:bufnr)
+
+FUNCTION  <SNR>43_dir()
+    Defined: ~/.cache/dein/.cache/init.vim/.dein/autoload/gitgutter/utility.vim:231
+Called 13 times
+Total time:   0.002852
+ Self time:   0.000358
+
+count  total (s)   self (s)
+   13   0.002844   0.000350   return gitgutter#utility#shellescape(fnamemodify(s:abs_path(a:bufnr, 0), ':h'))
+
+FUNCTION  gitgutter#utility#getbufvar()
+    Defined: ~/.cache/dein/.cache/init.vim/.dein/autoload/gitgutter/utility.vim:21
+Called 52 times
+Total time:   0.001031
+ Self time:   0.001031
+
+count  total (s)   self (s)
+   52              0.000304   let ggvars = getbufvar(a:buffer, 'gitgutter')
+   52              0.000485   if type(ggvars) == type({}) && has_key(ggvars, a:varname)
+   52              0.000164     return ggvars[a:varname]
+                              endif
+                              if a:0
+                                return a:1
+                              endif
+
+FUNCTION  spelunker#toggle#is_enabled_global()
+    Defined: ~/.cache/dein/.cache/init.vim/.dein/autoload/spelunker/toggle.vim:88
+Called 13 times
+Total time:   0.000062
+ Self time:   0.000062
+
+count  total (s)   self (s)
+   13              0.000033 	if g:enable_spelunker_vim == 1
+   13              0.000015 		return 1
+                            	endif
+                            
+                            	return 0
+
+FUNCTION  <SNR>43_exists_file()
+    Defined: ~/.cache/dein/.cache/init.vim/.dein/autoload/gitgutter/utility.vim:240
+Called 13 times
+Total time:   0.004466
+ Self time:   0.000761
+
+count  total (s)   self (s)
+   13   0.004437   0.000732   return filereadable(s:abs_path(a:bufnr, 0))
+
+FUNCTIONS SORTED ON TOTAL TIME
+count  total (s)   self (s)  function
+  185   0.029045   0.027200  <SNR>84_Highlight_Matching_Pair()
+  185   0.014302   0.005544  signature_help#doc#close_floating()
+   13   0.012288   0.001910  gitgutter#process_buffer()
+  185   0.008758   0.003115  47()
+   13   0.008688   0.000770  gitgutter#utility#is_active()
+   26   0.005824             <SNR>43_abs_path()
+  185   0.005643   0.002452  49()
+   13   0.004466   0.000761  <SNR>43_exists_file()
+  185   0.003191             <SNR>130__exists()
+   13   0.003120   0.000268  <SNR>43_not_git_dir()
+   13   0.002852   0.000358  <SNR>43_dir()
+  185   0.001844             <SNR>84_Remove_Matches()
+   52   0.001031             gitgutter#utility#getbufvar()
+   13   0.000916   0.000164  <SNR>110_setup_path()
+   13   0.000807   0.000251  spelunker#check_displayed_words()
+   13   0.000752   0.000206  gitgutter#utility#has_repo_path()
+   13   0.000556   0.000272  <SNR>101_is_runnable()
+   13   0.000546   0.000284  gitgutter#utility#repo_path()
+   13   0.000384   0.000215  <SNR>110_has_fresh_changes()
+   13   0.000374             gitgutter#utility#shellescape()
+
+FUNCTIONS SORTED ON SELF TIME
+count  total (s)   self (s)  function
+  185   0.029045   0.027200  <SNR>84_Highlight_Matching_Pair()
+   26              0.005824  <SNR>43_abs_path()
+  185   0.014302   0.005544  signature_help#doc#close_floating()
+  185              0.003191  <SNR>130__exists()
+  185   0.008758   0.003115  47()
+  185   0.005643   0.002452  49()
+   13   0.012288   0.001910  gitgutter#process_buffer()
+  185              0.001844  <SNR>84_Remove_Matches()
+   52              0.001031  gitgutter#utility#getbufvar()
+   13   0.008688   0.000770  gitgutter#utility#is_active()
+   13   0.004466   0.000761  <SNR>43_exists_file()
+   13              0.000374  gitgutter#utility#shellescape()
+   13   0.002852   0.000358  <SNR>43_dir()
+   13   0.000546   0.000284  gitgutter#utility#repo_path()
+   13   0.000556   0.000272  <SNR>101_is_runnable()
+   13   0.003120   0.000268  <SNR>43_not_git_dir()
+   13   0.000807   0.000251  spelunker#check_displayed_words()
+   13   0.000285   0.000222  spelunker#toggle#is_enabled()
+   13   0.000384   0.000215  <SNR>110_has_fresh_changes()
+   13   0.000752   0.000206  gitgutter#utility#has_repo_path()
+
