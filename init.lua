@@ -1,3 +1,4 @@
 require('config')
 require('map-basic')
-require('vscode-plugin')
+require('plugins')
+require('plugin-settings')

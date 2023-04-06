@@ -20,7 +20,6 @@ map('n', 'k', 'gk', ns)
 map('n', '<C-j>', '5j', ns)
 map('n', '<C-k>', '5k', ns)
 
-
 map('v', 'j', 'gj', ns)
 map('v', 'k', 'gk', ns)
 map('v', '<C-j>', '5j', ns)
