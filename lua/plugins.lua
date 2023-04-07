@@ -37,6 +37,6 @@ return packer.startup(function(use)
   use "machakann/vim-sandwich"
   use "justinmk/vim-sneak"
   use "wellle/targets.vim"
-  use "tpope/vim-commentary" 
+  use "tpope/vim-commentary"
   use "rhysd/clever-f.vim" end
 )
